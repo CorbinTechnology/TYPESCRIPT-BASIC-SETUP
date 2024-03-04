@@ -2,17 +2,20 @@
 import ThrowError from '../../../middlewares/error';
 
 export interface UserProps {
+    _id: string;
   username: string;
   email: string;
   password: string;
 }
 
 class UserModel implements UserProps {
+    _id: string;
   email: string;
   username: string;
   password: string;
 
   constructor(_props: UserProps) {
+    this._id=_props._id;
       this.username = _props.username;
       this.email = _props.email;
       this.password = _props.password;

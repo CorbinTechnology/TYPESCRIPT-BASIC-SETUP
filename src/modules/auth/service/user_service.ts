@@ -1,3 +1,4 @@
+import { Response } from "express";
 import UserModel, { UserProps } from "../models/user_model";
 import UserRepository from "../repository/user_repository";
 
@@ -25,6 +26,30 @@ class UserService {
       }
     }
   }
+
+
+  static async loginUser(email: string, password: string, res: Response): Promise<void> {
+    try {
+      if (!email || !password) {
+        res.status(400).json({ statusMessage:"FAILURE",error: 'Email and password are required' });
+        return;
+      }
+      
+      const existingUser = await UserRepository.findEmail(email);
+      
+      if (!existingUser) {
+        res.status(404).json({statusMessage:"FAILURE",error: "User not found. Please enter a registered email!" });
+        return;
+      }
+
+      await UserRepository.verifyUserByLogin(existingUser, password, res);
+    } catch (error) {
+      console.error("Error while logging in the user:", error);
+    }
+  }
+
+
+
 }
 
 export default UserService;
