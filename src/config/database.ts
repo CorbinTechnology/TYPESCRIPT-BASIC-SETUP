@@ -6,7 +6,6 @@ export async function initializeMongo() {
   try {
     let mongoURI = process.env.MONGO_URI ||""
 
-  console.log("Mongo ",process.env.MONGO_URI);
   
 
  client = new MongoClient(mongoURI);
