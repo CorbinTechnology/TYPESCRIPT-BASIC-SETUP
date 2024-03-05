@@ -25,7 +25,15 @@ class UserController {
       console.error("Error while login the user!!!");
     }
   }
-
+  static async home(req: Request, res: Response): Promise<void> {
+    try {
+    
+      res.status(200).json({userID:req.userID,email:req.email});
+    } catch (error: any) {
+      res.json({errorMessage:error});
+      
+    }
+  }
 
 }
 
