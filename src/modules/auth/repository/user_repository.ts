@@ -26,16 +26,25 @@ class UserRepository {
   //Login user 
   static async verifyUserByLogin(user: UserProps, password: string, res: Response): Promise<void> {
     try {
+      // Compare the provided password with the hashed password stored in the user object
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (!passwordMatch) {
-        res.status(401).json({ error: 'Invalid password' });
-        return;
+        // If passwords don't match, return a 401 Unauthorized response
       }
 
-      const token = jwt.sign({ userId: user._id,email:user.email }, process.env.JWT_SECRET || '');
-      res.status(200).json({ user, token });
+      // Generate JWT token with user ID and email payload
+      const token = jwt.sign(
+        { userID: user._id, email: user.email },
+        process.env.JWT_SECRET || '',
+        { expiresIn: '15s' } // Set expiration time for 1 hour (adjust as needed)
+      );
+      
+      // Return user object and token in the response
+       res.status(200).json({ user, token });
     } catch (error) {
+      // Log and handle any errors that occur during login
       console.error("Error while verifying user by login:", error);
+       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
 }
