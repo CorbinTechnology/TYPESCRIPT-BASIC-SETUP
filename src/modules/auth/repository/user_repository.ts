@@ -36,7 +36,7 @@ class UserRepository {
       const token = jwt.sign(
         { userID: user._id, email: user.email },
         process.env.JWT_SECRET || '',
-        { expiresIn: '15s' } // Set expiration time for 1 hour (adjust as needed)
+        { expiresIn: '1m' } // Set expiration time for 1 hour (adjust as needed)
       );
       
       // Return user object and token in the response
