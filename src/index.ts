@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import http from "http";
 import { initializeMongo } from "./config/database";
-import user_router from "./modules/auth/router/user_routes";
 
 // import { initializeSendgrid } from "./config/mail";
 
@@ -14,7 +13,6 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(user_router);
 
 // const server = http.createServer(app);
 
